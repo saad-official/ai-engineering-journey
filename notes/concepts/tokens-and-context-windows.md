@@ -1,6 +1,6 @@
 # Tokens and Context Windows
 
-**Status:** draft
+**Status:** understood (measured in exp-002; re-check when Changelog Forge applies it)
 **Phase:** 1   **Tags:** [F], llm-fundamentals / cost / context
 
 ## Concept
@@ -43,7 +43,9 @@ your string; it receives `[9906, 1917, 0]`.
 
 Rules of thumb for English prose: ~4 characters ≈ 1 token, ~0.75 words ≈ 1 token, a page ≈ 500
 tokens, this note ≈ 1,500 tokens. These are worthless for code and non-English — measure, do not
-guess.
+guess. Measured in exp-002 with `o200k_base`: English prose 5.15 chars/token, TypeScript 4.03,
+minified JSON 3.44, pretty JSON 3.29, URLs 3.08, Urdu 3.07. A 1.7x spread on the *same* rule of
+thumb, so "characters ÷ 4" under-counts a JSON payload by ~20% and Urdu by ~40%.
 
 ## Architecture
 
@@ -67,28 +69,78 @@ This is why output tokens cost 3-8x more than input tokens everywhere.
 
 ## Example
 
-From `EXPERIMENTS.md` exp-001 — same prompt, two providers:
+### Measured, exp-002 (`labs/02-tokens`, 2026-09-05)
 
-| Provider / model | in | out | latency | cost |
-|---|---|---|---|---|
-| Gemini 3.5-flash-lite | 18 | 65 | 32.5 s | $0.000168 |
-| Groq gpt-oss-20b | 88 | 200 | 1.4-2.0 s | $0.000067 |
+Three numbers per text, because two would not separate the two causes. `local` is `tiktoken`
+`o200k_base` on the bare string; `gem:count` is Gemini's own `countTokens` on the *same bare string*
+(so `gem:count − local` is purely a **vocabulary** difference); `gem:usage` / `groq:usage` are
+`usage.prompt_tokens` from a real chat call (so `usage − count` is purely the **chat template**).
 
-Two lessons in one table.
+| text | local | chars/tok | gem:count | vocab | gem:usage | wrapper | groq:usage | vs local |
+|---|---|---|---|---|---|---|---|---|
+| prose-en | 81 | 5.15 | 81 | +0 | 82 | +1 | 152 | **+71** |
+| prose-ur | 129 | 3.07 | 119 | **−10** | 120 | +1 | 200 | **+71** |
+| code-ts | 216 | 4.03 | 236 | +20 | 237 | +1 | 287 | **+71** |
+| json-min | 130 | 3.44 | 145 | +15 | 146 | +1 | 201 | **+71** |
+| json-pretty | 198 | 3.29 | 241 | **+43** | 242 | +1 | 269 | **+71** |
+| urls | 127 | 3.08 | 155 | +28 | 156 | +1 | 198 | **+71** |
 
-**1. Same prompt, 18 vs 88 input tokens.** Tokenizer differences alone explain maybe ±20%, not 5x.
-The rest is the **chat template**: gpt-oss uses the Harmony format, which injects a system block
-(knowledge cutoff, current date, reasoning effort, channel instructions) before your text. You are
-billed for tokens you never wrote. `prompt_tokens` from the provider is always ≥ your local count.
+**1. The 18-vs-88 gap from exp-001 was the wrapper, not the vocabulary.** The lab-01 prompt is 17
+tokens locally. 17 + 1 = 18 (Gemini reported 18); 17 + 71 = 88 (Groq reported 88). Exact, both
+providers. gpt-oss-20b uses the Harmony chat format, which injects a fixed system block (knowledge
+cutoff, current date, reasoning effort, channel instructions) before your text; Gemini's
+OpenAI-compatible layer adds essentially nothing. The intuitive answer — "different tokenizers" —
+was ~0% of the explanation here.
 
-**2. Fewer tokens ≠ cheaper.** Blended cost per million tokens: Gemini $0.000168 / 83 ≈ **$2.02/M**;
-Groq $0.000067 / 288 ≈ **$0.23/M**. Groq used 3.5x more tokens and still cost 2.5x less, because
-unit price dominates token count. Cost = tokens × rate; optimise the term with the larger leverage.
+**2. The wrapper is constant, not proportional.** +71 on all six texts, from 81 to 216 local tokens.
+So wrapper overhead as a *percentage* is 418% on a 17-token prompt, 33% on a 216-token one, and
+~0.35% on a 20k-token one. Constant overhead is an argument for batching: N small calls pay 71N,
+one call with N items inside pays 71.
+
+**3. Vocabulary differences are content-specific and can go either way.** Gemini beats o200k on
+Urdu (−10) and loses on pretty JSON (+43), URLs (+28) and TypeScript (+20). A single "local estimate
+is ~10% low" correction factor would be wrong in both directions. The error is per-provider *and*
+per-content-type, which is why the local count is only ever a free lower bound.
+
+**4. Formatting is a free cost lever.** `json-min` and `json-pretty` are `json.dumps` of the *same*
+Python object. Identical meaning, +52% tokens locally and +66% on Gemini. Minifying JSON before it
+goes into a prompt is a pure win with zero quality cost.
+
+**5. Non-Latin scripts carry a permanent tax.** The Urdu sample has *fewer* characters than the
+English one (396 vs 417) and costs 59% more tokens (129 vs 81). Same feature, higher cost and
+smaller effective context, for those users specifically.
+
+**6. Fewer tokens ≠ cheaper.** From exp-001, blended cost per million: Gemini $0.000168 / 83 ≈
+**$2.02/M**; Groq $0.000067 / 288 ≈ **$0.23/M**. Groq used 3.5x more tokens and still cost 2.5x
+less — unit price dominated token count. Cost = tokens × rate; optimise the term with more leverage.
+
+### Latency and truncation
+
+Gemini 3.5-flash-lite, 10 sequential calls: min 0.66 s, **median 0.81 s, p90 0.84 s**, max 1.88 s
+(the first call). exp-001's 32.5 s was a cold start, confirmed — one sample is not data.
+
+`max_tokens=16` on a JSON-producing prompt returned `finish_reason='length'`, content
+`'{\n  "version": "1.0.0'`, usage 32 in / 12 out, and a `JSONDecodeError`. HTTP 200. The failure
+looks like a model-quality problem and is really a budget problem.
 
 ## Implementation
 
 `labs/01-hello-llm/main.py` — first usage numbers (exp-001).
-Planned: `labs/02-tokens` (exp-002: local tokenizer counts vs provider-reported `usage`).
+
+`labs/02-tokens/` (exp-002) — the measurement above. Key design decisions:
+
+- **Three numbers per text, not two.** Two numbers give you a gap; three give you two subtractions,
+  each isolating one cause. `countTokens` exists precisely because it is the same tokenizer without
+  the chat wrapper — it is the control variable.
+- **A paired sample** (`JSON_MIN` / `JSON_PRETTY` from one Python object) isolates formatting with
+  meaning held constant.
+- `prompt_tokens()` uses `max_tokens=1`: `usage` is reported regardless of output length, so the
+  expensive half of the call is reduced to one token.
+- Provider counts are cached to `.cache/<sha1>.json` keyed on `(kind, provider, model, text)`, so
+  re-running to fix a print statement burns no free-tier quota.
+- `o200k_base` is deliberately the *wrong* tokenizer for both providers. There is no public local
+  tokenizer for Gemini, so the honest move is to use a proxy and **measure its error** rather than
+  assume it away.
 
 ## Trade-offs
 
@@ -103,7 +155,14 @@ Planned: `labs/02-tokens` (exp-002: local tokenizer counts vs provider-reported 
 ## Production considerations
 
 - **Count before you send.** Token-budget guard in the client layer; reject or truncate rather than
-  discovering the limit as a 400 from the provider.
+  discovering the limit as a 400 from the provider. Use a local count as a *lower bound* with a
+  measured per-provider safety margin (exp-002: o200k under-counted Gemini by up to 22% on pretty
+  JSON), never as the budget itself.
+- **Normalise payloads before they enter a prompt.** Minify JSON, strip redundant whitespace, drop
+  fields the model does not need. exp-002: 34% off, zero quality cost.
+- **Constant wrapper overhead changes batching maths.** If every call carries a fixed +71 tokens,
+  many tiny calls are proportionally far more expensive than one batched call. Measure the wrapper
+  per provider/model before designing a per-item fan-out.
 - **Reserve headroom** for `max_tokens` (and for reasoning tokens) inside the window; a request
   that fits the input but not the answer is still a failure.
 - **Log `usage` on every call** (prompt, completion, reasoning, cached) and derive cost per request
@@ -122,19 +181,32 @@ Planned: `labs/02-tokens` (exp-002: local tokenizer counts vs provider-reported 
    too long for quadratic attention; words make the vocabulary unbounded. Sub-words give a fixed
    vocab with no out-of-vocabulary failures.
 2. *The same prompt reports different input token counts on two providers. Why?*
-   Different tokenizer vocabularies, plus provider-side chat templates and system scaffolding
-   prepended to your messages. Provider `prompt_tokens` ≥ your local tokenizer count.
-3. *A model has a 1M-token context window. Can it write a 1M-token answer?*
+   Two independent causes: different tokenizer vocabularies, and provider-side chat templates /
+   system scaffolding prepended to your messages. To tell them apart you need a bare-string count
+   from the provider's own tokenizer as a control. Measured (exp-002): 17-token prompt → 18 on
+   Gemini, 88 on Groq gpt-oss-20b; the gap was a constant +71-token Harmony chat template and
+   effectively zero vocabulary difference.
+3. *How would you design an experiment to attribute that gap?*
+   Three numbers per input: local tokenizer, the provider's bare-string count endpoint
+   (`countTokens`), and `usage.prompt_tokens` from a real call. Subtraction 1 isolates vocabulary,
+   subtraction 2 isolates the template. Vary content type (prose, code, JSON, non-Latin, URLs) so
+   you can tell constant overhead from proportional overhead, and hold meaning constant across a
+   paired sample (same object minified vs pretty) to isolate formatting.
+4. *Is chat-template overhead constant or proportional, and why does it matter?*
+   Constant per call in the simple case (+71 on every text, exp-002). That makes small prompts
+   proportionally far more expensive — 418% overhead on a 17-token prompt — which is a direct
+   argument for batching many small items into one call rather than fanning out.
+5. *A model has a 1M-token context window. Can it write a 1M-token answer?*
    No. Max output is a separate, much smaller limit, and input + reasoning + output share one
    window.
-4. *Why do output tokens cost more than input tokens?*
+6. *Why do output tokens cost more than input tokens?*
    Prefill is parallelised across the prompt; decode is serial — one full forward pass per output
    token. Output consumes far more GPU time per token.
-5. *How do you estimate the cost of a feature before building it?*
+7. *How do you estimate the cost of a feature before building it?*
    Estimate tokens per call (measured with the model's tokenizer on realistic input, not English
    prose averages), split input/output, multiply by published rates, multiply by expected calls per
    user action, and add a margin for retries and reasoning tokens.
-6. *You get a 200 OK with empty content and 200 completion tokens billed. Diagnose it.*
+8. *You get a 200 OK with empty content and 200 completion tokens billed. Diagnose it.*
    A reasoning model spent the whole `max_tokens` budget on hidden reasoning tokens before emitting
    any visible content. Raise the budget, lower reasoning effort, or use a non-reasoning model.
 
@@ -143,9 +215,30 @@ Planned: `labs/02-tokens` (exp-002: local tokenizer counts vs provider-reported 
 **Changelog Forge** (Phase 1). A 400-commit diff will not fit any context window, which forces
 chunk-and-merge (map-reduce), a token-budget guard before every call, per-run cost logging, and
 model routing (cheap model to classify commits, better model for prose). The whole project is an
-exercise in spending tokens deliberately.
+exercise in spending tokens deliberately. exp-002 gives it four concrete rules: diffs and JSON are
+the two content types where the local estimate is *least* trustworthy (+20 and +43 on Gemini), so
+carry a per-content-type margin; minify every JSON payload; batch commit classification rather than
+one call per commit, because the wrapper is constant; and check `finish_reason` before every
+`json.loads` in the map step.
+
+## Limits of what exp-002 proves
+
+Recorded so the numbers are not over-trusted later:
+
+- **One run, one day.** No variance across runs; providers change chat templates and models silently.
+- **One model per provider.** The +71 may be Harmony-format-specific (gpt-oss) rather than
+  Groq-specific. Untested.
+- **Synthetic texts**, not real commit diffs or real user input.
+- **`o200k_base` is a proxy**, not Gemini's or gpt-oss's real tokenizer. The "vocab" column is
+  "difference from o200k", not "Gemini's tokenizer quality" in the abstract.
+- **The wrapper was measured for a single bare user message** — no system prompt, no assistant
+  history, no tool schemas. Whether it stays constant once those exist is the open question that
+  lab 04 (tool calling) answers.
+- **`max_tokens=1`** may itself change what a reasoning model reports; the numbers are input-side
+  only and say nothing about reasoning-token accounting.
 
 ## References
 
-- `EXPERIMENTS.md` exp-001 (2026-09-05) — own measurements.
+- `EXPERIMENTS.md` exp-001, exp-002 (2026-09-05) — own measurements.
+- `labs/02-tokens/NOTES.md` — full run output.
 - Provider pricing pages — re-verify at each use; rates in this note are as logged in exp-001.

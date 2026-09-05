@@ -47,7 +47,7 @@ Links checked, with dates.
 ## Index
 
 ### Phase 1: LLM fundamentals and Python
-- [~] [tokens-and-context-windows](notes/concepts/tokens-and-context-windows.md) `[F]` — draft, pending exp-002
+- [x] [tokens-and-context-windows](notes/concepts/tokens-and-context-windows.md) `[F]` — understood; measured in exp-002 (`labs/02-tokens`)
 - [ ] prompting-and-message-roles `[F]`
 - [ ] generation-parameters `[F]`
 - [ ] structured-outputs `[F]`
