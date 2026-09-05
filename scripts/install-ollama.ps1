@@ -37,9 +37,15 @@ Log "Signature valid: $($sig.SignerCertificate.Subject)"
 # 3. Install silently to G:\Ollama (Inno Setup switches).
 if (-not (Test-Path "$installDir\ollama.exe")) {
   Log "Installing to $installDir ..."
-  $p = Start-Process -FilePath $installer -ArgumentList "/DIR=`"$installDir`"", "/SILENT", "/NORESTART" -Wait -PassThru
+  # Do not use -Wait: the installer launches the tray app and -Wait would block on that child forever.
+  $p = Start-Process -FilePath $installer -ArgumentList "/DIR=`"$installDir`"", "/SILENT", "/NORESTART" -PassThru
+  $p.WaitForExit()
   if ($p.ExitCode -ne 0) { throw "Installer exited with code $($p.ExitCode)" }
   Log "Installed."
+  # The installer starts the tray app with the installer's environment, which may not include the
+  # user env vars set moments ago. Restart it so OLLAMA_MODELS etc. take effect.
+  Get-Process -Name "ollama app","ollama" -ErrorAction SilentlyContinue | Stop-Process -Force
+  Start-Sleep 3
 } else { Log "Already installed." }
 
 # 4. Make sure the server is running, then pull models.

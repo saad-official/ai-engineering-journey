@@ -43,7 +43,7 @@ an undocumented lab is a lab that did not happen.
 | Theory | 2-3 h | 2.5 h | W2-T01, W2-T02 |
 | Build | 5-7 h | 5.5 h (4.25 h if lab 03 is cut) | W2-T03 … W2-T09 |
 | Reflect | 1 h | 1.9 h (deliberately over: two experiment rows + the first concept note) | W2-T10 … W2-T12, W2-T14 |
-| Stretch | — | 0.75 h | W2-T13 (Ollama) |
+| Stretch | — | 0 h | W2-T13 (Ollama) - already done, see §6 |
 
 Suggested shape for a full-time-job week — weekday evenings are theory and small increments, the
 weekend carries the build:
@@ -105,7 +105,7 @@ hand, no generated code, because the muscle memory or the reasoning is the point
 | W2-T10 | Log exp-002 and exp-003 in `EXPERIMENTS.md` | Two new rows with real numbers; exp-001's Conclusion cell amended with the latency answer | 0.5 h | T07, T09 | **Hand** | Both rows follow the existing format (date, id, question, setup, result **with numbers**, conclusion, link). exp-001's open question about Gemini latency is now answered in-place |
 | W2-T11 | Write `notes/concepts/tokens-and-context-windows.md` | The first durable concept note, using the `AI_CONCEPTS.md` template | 1.0 h | T07, T02 | **Hand** (AI reviews) | All template sections filled; **Status: understood**; Example and Implementation sections cite real numbers from lab 02, not generic examples; the box in `AI_CONCEPTS.md` is ticked |
 | W2-T12 | Run the `reviewer` agent over the week's code | A short list of findings; the highest-value one is fixed | 0.5 h | T09 | AI | Findings recorded at the bottom of the relevant `NOTES.md`; at least one fix committed to the lab code, or an explicit "accepted, because…" for each finding not fixed |
-| W2-T13 | **(Stretch)** Install Ollama on G: with two small models | Ollama installed at `G:\Ollama`, `OLLAMA_MODELS=G:\ollama-models`, `qwen3:1.7b` + `nomic-embed-text` pulled | 0.75 h | — | AI | `curl http://localhost:11434/v1/models` lists both models. Env vars from `TECHNOLOGY_STACK.md` §3 set as **user** vars, tray app restarted. **Hard time-box: 45 minutes, then stop and log the blocker** |
+| W2-T13 | ~~Install Ollama on G: with two small models~~ **ALREADY DONE** | Verified 2026-09-05: `G:\Ollama\ollama.exe`, `OLLAMA_MODELS=G:\ollama-models`, API serving `qwen3:1.7b`, `nomic-embed-text`, `qwen3-embedding:0.6b` (~2.2 GB) | 0 h | — | done | Met before the week started; lab 01 NOTES already records a local `qwen3:1.7b` run at ~13 tok/s. Phase 0 has no open items |
 | W2-T14 | Fill the week 2 tracker row | `LEARNING_PLAN.md` week 2 row has Done and Blockers filled | 0.1 h | T12 | Hand | Done column lists what actually shipped, not what was planned. Blockers column is honest, including "ran out of evenings" |
 
 **Total:** 9.85 h core, 10.6 h with W2-T13.
@@ -137,8 +137,14 @@ oversight. The screenshot habit starts at Changelog Forge M1.
 
 ## 6. The carry-over Phase 0 gap: Ollama
 
-**Decision: week 1 stretch item (W2-T13), hard-time-boxed to 45 minutes, with a hard deadline of Phase 1
-week 3. Do it only after W2-T12 is finished.**
+**Superseded 2026-09-05: this gap is already closed.** Ollama is installed at `G:\Ollama` with
+`OLLAMA_MODELS=G:\ollama-models`, serving `qwen3:1.7b`, `nomic-embed-text` and
+`qwen3-embedding:0.6b` (~2.2 GB total, inside the 8 GB budget). `EXPERIMENTS.md` exp-001 still
+says "Ollama: not installed yet" and is stale on that point - amend it in W2-T10. Phase 0 has no
+open items. The reasoning below is kept because it is the right way to have made the call, and
+the scope discipline at the end still governs any future model pulls.
+
+<details><summary>Original decision (week 1 stretch, 45-minute time-box, week 3 deadline)</summary>
 
 Why not earlier in the week:
 
@@ -157,7 +163,9 @@ Why not defer it further than week 3: it is the only open Phase 0 item, and unfi
 compounds. If it is still open at the end of week 3, it stops being a stretch item and becomes W3's
 first task.
 
-**Scope discipline when doing it:** pull `qwen3:1.7b` (1.4 GB) and `nomic-embed-text` (0.27 GB) only —
+</details>
+
+**Scope discipline for any future model pull:** pull `qwen3:1.7b` (1.4 GB) and `nomic-embed-text` (0.27 GB) only —
 about 1.7 GB. `qwen3.5:4b` and `qwen3-embedding:0.6b` wait for Phase 2, when there is something to
 measure them against. Do not run `llama-bench` this week.
 
