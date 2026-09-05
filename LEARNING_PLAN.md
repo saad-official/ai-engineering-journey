@@ -73,8 +73,8 @@ Hybrid search and reranking; RAG evaluation methodology; agent design without fr
 
 | Week | Dates | Phase | Planned | Done | Blockers / notes |
 |---|---|---|---|---|---|
-| 1 | 2026-09-08 | 0 | Setup, hello-llm, provider keys, repo pushed | | |
-| 2 | | 1 | | | |
+| 1 | 2026-08-31 to 09-06 | 0 | Setup, hello-llm, provider keys, repo pushed | Done: uv toolchain, `labs/01-hello-llm` against Gemini/Groq/OpenRouter, exp-001 logged, `TECHNOLOGY_STACK.md` verified, repo pushed to `saad-official/ai-engineering-journey` (public) | Ollama not installed yet - carried into Phase 1 as a stretch item, hard deadline week 3 |
+| 2 | 2026-09-07 to 09-13 | 1 | Theory: DataCamp "LLMs Concepts" ch. 1-4 (~2.5 h). Build: `labs/02-tokens` (local tokenizer vs provider `usage` for 5 texts; Gemini latency re-measured over 10 calls) and `labs/03-params` (1 prompt x temp 0/0.7/1.2 x 5 runs on Groq). Reflect: `EXPERIMENTS.md` exp-002 + exp-003 rows and an exp-001 amendment; `notes/concepts/tokens-and-context-windows.md`; `reviewer` agent pass. Stretch: Ollama install on G: (time-boxed 45 min). Plan: `notes/plans/phase1-week1.md` | | |
 
 ## Phase exit checklist
 

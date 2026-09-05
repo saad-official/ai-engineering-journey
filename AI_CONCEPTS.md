@@ -1,6 +1,6 @@
 # AI Concepts: Knowledge Base Index
 
-One Markdown file per concept in `notes/concepts/`, written when the concept is understood (not before), using the template below. This index lists what exists and what is planned. `[F]` durable fundamental, `[T]` tool-specific.
+One Markdown file per concept in `notes/concepts/`, written when the concept is understood (not before), using the template below. This index lists what exists and what is planned. `[F]` durable fundamental, `[T]` tool-specific. Checkbox: `[ ]` not started, `[~]` note drafted, `[x]` understood and applied.
 
 ## Template (`notes/concepts/<kebab-name>.md`)
 
@@ -47,7 +47,7 @@ Links checked, with dates.
 ## Index
 
 ### Phase 1: LLM fundamentals and Python
-- [ ] tokens-and-context-windows `[F]`
+- [~] [tokens-and-context-windows](notes/concepts/tokens-and-context-windows.md) `[F]` — draft, pending exp-002
 - [ ] prompting-and-message-roles `[F]`
 - [ ] generation-parameters `[F]`
 - [ ] structured-outputs `[F]`
