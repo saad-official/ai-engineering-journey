@@ -22,7 +22,7 @@ with no network at all. Calls are 2 s apart (Gemini free-tier RPM is still UNVER
 
 ---
 
-## Results (run 1, 2026-09-05)
+## Results (run 1, 2026-09-08)
 
 ### A. Local counts (`o200k_base`)
 

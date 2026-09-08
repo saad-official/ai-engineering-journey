@@ -3,9 +3,9 @@
 **Dates:** Mon 2026-09-07 → Sun 2026-09-13
 **Phase:** 1 (Python for AI + LLM API fundamentals, roadmap weeks 2-5)
 **Budget:** 8-12 focused hours. This plan commits ~9.9 h of core work, ~10.6 h with the stretch item.
-**Planned by:** `pm` agent, 2026-09-05.
+**Planned by:** `pm` agent, 2026-09-08.
 
-> Tracker note: resolved in `LEARNING_PLAN.md` by the main session on 2026-09-05. Phase 0 ran the
+> Tracker note: resolved in `LEARNING_PLAN.md` by the main session on 2026-09-08. Phase 0 ran the
 > week of Mon 2026-08-31 (week 1); this is the calendar week of Mon 2026-09-07 (week 2). The old
 > `2026-09-08` in both rows was a Tuesday and is corrected.
 
@@ -105,7 +105,7 @@ hand, no generated code, because the muscle memory or the reasoning is the point
 | W2-T10 | Log exp-002 and exp-003 in `EXPERIMENTS.md` | Two new rows with real numbers; exp-001's Conclusion cell amended with the latency answer | 0.5 h | T07, T09 | **Hand** | Both rows follow the existing format (date, id, question, setup, result **with numbers**, conclusion, link). exp-001's open question about Gemini latency is now answered in-place |
 | W2-T11 | Write `notes/concepts/tokens-and-context-windows.md` | The first durable concept note, using the `AI_CONCEPTS.md` template | 1.0 h | T07, T02 | **Hand** (AI reviews) | All template sections filled; **Status: understood**; Example and Implementation sections cite real numbers from lab 02, not generic examples; the box in `AI_CONCEPTS.md` is ticked |
 | W2-T12 | Run the `reviewer` agent over the week's code | A short list of findings; the highest-value one is fixed | 0.5 h | T09 | AI | Findings recorded at the bottom of the relevant `NOTES.md`; at least one fix committed to the lab code, or an explicit "accepted, because…" for each finding not fixed |
-| W2-T13 | ~~Install Ollama on G: with two small models~~ **ALREADY DONE** | Verified 2026-09-05: `G:\Ollama\ollama.exe`, `OLLAMA_MODELS=G:\ollama-models`, API serving `qwen3:1.7b`, `nomic-embed-text`, `qwen3-embedding:0.6b` (~2.2 GB) | 0 h | — | done | Met before the week started; lab 01 NOTES already records a local `qwen3:1.7b` run at ~13 tok/s. Phase 0 has no open items |
+| W2-T13 | ~~Install Ollama on G: with two small models~~ **ALREADY DONE** | Verified 2026-09-08: `G:\Ollama\ollama.exe`, `OLLAMA_MODELS=G:\ollama-models`, API serving `qwen3:1.7b`, `nomic-embed-text`, `qwen3-embedding:0.6b` (~2.2 GB) | 0 h | — | done | Met before the week started; lab 01 NOTES already records a local `qwen3:1.7b` run at ~13 tok/s. Phase 0 has no open items |
 | W2-T14 | Fill the week 2 tracker row | `LEARNING_PLAN.md` week 2 row has Done and Blockers filled | 0.1 h | T12 | Hand | Done column lists what actually shipped, not what was planned. Blockers column is honest, including "ran out of evenings" |
 
 **Total:** 9.85 h core, 10.6 h with W2-T13.
@@ -137,7 +137,7 @@ oversight. The screenshot habit starts at Changelog Forge M1.
 
 ## 6. The carry-over Phase 0 gap: Ollama
 
-**Superseded 2026-09-05: this gap is already closed.** Ollama is installed at `G:\Ollama` with
+**Superseded 2026-09-08: this gap is already closed.** Ollama is installed at `G:\Ollama` with
 `OLLAMA_MODELS=G:\ollama-models`, serving `qwen3:1.7b`, `nomic-embed-text` and
 `qwen3-embedding:0.6b` (~2.2 GB total, inside the 8 GB budget). `EXPERIMENTS.md` exp-001 still
 says "Ollama: not installed yet" and is stale on that point - amend it in W2-T10. Phase 0 has no
