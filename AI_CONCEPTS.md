@@ -7,7 +7,7 @@ One Markdown file per concept in `notes/concepts/`, written when the concept is 
 ```markdown
 # <Concept>
 
-**Status:** draft | understood | applied in project | interview-ready
+**Status:** draft | learning | understood | applied in project | interview-ready
 **Phase:** N   **Tags:** [F]/[T], area
 
 ## Concept
@@ -49,7 +49,7 @@ Links checked, with dates.
 ### Phase 1: LLM fundamentals and Python
 - [x] [tokens-and-context-windows](notes/concepts/tokens-and-context-windows.md) `[F]` — understood; measured in exp-002 (`labs/02-tokens`)
 - [ ] prompting-and-message-roles `[F]`
-- [ ] generation-parameters `[F]`
+- [~] [generation-parameters](notes/concepts/generation-parameters.md) `[F]` — note drafted (status `learning`); awaiting exp-003 numbers from `labs/03-params`
 - [ ] structured-outputs `[F]`
 - [ ] tool-calling `[F]`
 - [ ] streaming `[F]`

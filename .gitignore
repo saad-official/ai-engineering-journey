@@ -31,3 +31,7 @@ data/cache/
 Thumbs.db
 .vscode/settings.json
 .idea/
+
+# Lab run transcripts: keep one committed as evidence per lab, ignore the rest
+labs/*/runs/*.json
+!labs/*/runs/2026*-groq.json

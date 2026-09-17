@@ -1,0 +1,543 @@
+{
+  "lab": "03-params",
+  "started_at": "2026-09-17T06:40:27.267322+00:00",
+  "finished_at": "2026-09-17T06:42:11.994810+00:00",
+  "provider": "groq",
+  "model": "openai/gpt-oss-20b",
+  "runs_per_block": 5,
+  "max_tokens": 256,
+  "min_seconds_between_calls": 2.0,
+  "blocks": [
+    {
+      "prompt_label": "creative",
+      "prompt": "Invent a name for a command-line tool that turns merged pull requests into a release changelog, and write a tagline of at most six words for it. Reply with exactly one line in the form: Name - tagline. Nothing else.",
+      "temperature": 0.0,
+      "top_p": null,
+      "seed": null,
+      "runs": [
+        {
+          "index": 1,
+          "text": "",
+          "finish_reason": "length",
+          "prompt_tokens": 118,
+          "completion_tokens": 256,
+          "reasoning_tokens": 251,
+          "latency_s": 7.668,
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "",
+          "finish_reason": "length",
+          "prompt_tokens": 118,
+          "completion_tokens": 256,
+          "reasoning_tokens": 251,
+          "latency_s": 2.19,
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "",
+          "finish_reason": "length",
+          "prompt_tokens": 118,
+          "completion_tokens": 256,
+          "reasoning_tokens": 251,
+          "latency_s": 1.294,
+          "error": null
+        },
+        {
+          "index": 4,
+          "text": "",
+          "finish_reason": "length",
+          "prompt_tokens": 118,
+          "completion_tokens": 256,
+          "reasoning_tokens": 251,
+          "latency_s": 5.091,
+          "error": null
+        },
+        {
+          "index": 5,
+          "text": "",
+          "finish_reason": "length",
+          "prompt_tokens": 118,
+          "completion_tokens": 256,
+          "reasoning_tokens": 250,
+          "latency_s": 1.413,
+          "error": null
+        }
+      ]
+    },
+    {
+      "prompt_label": "creative",
+      "prompt": "Invent a name for a command-line tool that turns merged pull requests into a release changelog, and write a tagline of at most six words for it. Reply with exactly one line in the form: Name - tagline. Nothing else.",
+      "temperature": 0.7,
+      "top_p": null,
+      "seed": null,
+      "runs": [
+        {
+          "index": 1,
+          "text": "",
+          "finish_reason": "length",
+          "prompt_tokens": 118,
+          "completion_tokens": 256,
+          "reasoning_tokens": 254,
+          "latency_s": 4.416,
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "ReleaseLog - From PR merges to changelog.",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 250,
+          "reasoning_tokens": 231,
+          "latency_s": 3.6,
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "",
+          "finish_reason": "length",
+          "prompt_tokens": 118,
+          "completion_tokens": 256,
+          "reasoning_tokens": 254,
+          "latency_s": 1.027,
+          "error": null
+        },
+        {
+          "index": 4,
+          "text": "",
+          "finish_reason": "length",
+          "prompt_tokens": 118,
+          "completion_tokens": 256,
+          "reasoning_tokens": 254,
+          "latency_s": 1.564,
+          "error": null
+        },
+        {
+          "index": 5,
+          "text": "MergeLog - Pull Requests, Release Notes",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 241,
+          "reasoning_tokens": 224,
+          "latency_s": 1.366,
+          "error": null
+        }
+      ]
+    },
+    {
+      "prompt_label": "creative",
+      "prompt": "Invent a name for a command-line tool that turns merged pull requests into a release changelog, and write a tagline of at most six words for it. Reply with exactly one line in the form: Name - tagline. Nothing else.",
+      "temperature": 1.2,
+      "top_p": null,
+      "seed": null,
+      "runs": [
+        {
+          "index": 1,
+          "text": "MergeMate - Transform merged PRs into changelog",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 198,
+          "reasoning_tokens": 179,
+          "latency_s": 1.791,
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "ChangelogCraft - Merge PRs, create chang",
+          "finish_reason": "length",
+          "prompt_tokens": 118,
+          "completion_tokens": 256,
+          "reasoning_tokens": 238,
+          "latency_s": 1.603,
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "",
+          "finish_reason": "length",
+          "prompt_tokens": 118,
+          "completion_tokens": 256,
+          "reasoning_tokens": 254,
+          "latency_s": 1.745,
+          "error": null
+        },
+        {
+          "index": 4,
+          "text": "",
+          "finish_reason": "length",
+          "prompt_tokens": 118,
+          "completion_tokens": 256,
+          "reasoning_tokens": 254,
+          "latency_s": 1.382,
+          "error": null
+        },
+        {
+          "index": 5,
+          "text": "",
+          "finish_reason": "length",
+          "prompt_tokens": 118,
+          "completion_tokens": 256,
+          "reasoning_tokens": 254,
+          "latency_s": 1.208,
+          "error": null
+        }
+      ]
+    },
+    {
+      "prompt_label": "factual",
+      "prompt": "Which HTTP status code means the resource is gone permanently and is not coming back? Reply with the three-digit number only. Nothing else.",
+      "temperature": 0.0,
+      "top_p": null,
+      "seed": null,
+      "runs": [
+        {
+          "index": 1,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 72,
+          "reasoning_tokens": 62,
+          "latency_s": 1.297,
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 72,
+          "reasoning_tokens": 62,
+          "latency_s": 1.089,
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 72,
+          "reasoning_tokens": 62,
+          "latency_s": 2.598,
+          "error": null
+        },
+        {
+          "index": 4,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 72,
+          "reasoning_tokens": 62,
+          "latency_s": 1.314,
+          "error": null
+        },
+        {
+          "index": 5,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 72,
+          "reasoning_tokens": 62,
+          "latency_s": 0.914,
+          "error": null
+        }
+      ]
+    },
+    {
+      "prompt_label": "factual",
+      "prompt": "Which HTTP status code means the resource is gone permanently and is not coming back? Reply with the three-digit number only. Nothing else.",
+      "temperature": 0.7,
+      "top_p": null,
+      "seed": null,
+      "runs": [
+        {
+          "index": 1,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 54,
+          "reasoning_tokens": 44,
+          "latency_s": 1.076,
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 41,
+          "reasoning_tokens": 31,
+          "latency_s": 1.182,
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 63,
+          "reasoning_tokens": 53,
+          "latency_s": 1.084,
+          "error": null
+        },
+        {
+          "index": 4,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 53,
+          "reasoning_tokens": 43,
+          "latency_s": 1.003,
+          "error": null
+        },
+        {
+          "index": 5,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 59,
+          "reasoning_tokens": 49,
+          "latency_s": 1.235,
+          "error": null
+        }
+      ]
+    },
+    {
+      "prompt_label": "factual",
+      "prompt": "Which HTTP status code means the resource is gone permanently and is not coming back? Reply with the three-digit number only. Nothing else.",
+      "temperature": 1.2,
+      "top_p": null,
+      "seed": null,
+      "runs": [
+        {
+          "index": 1,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 47,
+          "reasoning_tokens": 37,
+          "latency_s": 0.957,
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 54,
+          "reasoning_tokens": 44,
+          "latency_s": 2.101,
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 62,
+          "reasoning_tokens": 52,
+          "latency_s": 0.665,
+          "error": null
+        },
+        {
+          "index": 4,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 45,
+          "reasoning_tokens": 35,
+          "latency_s": 1.021,
+          "error": null
+        },
+        {
+          "index": 5,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 41,
+          "reasoning_tokens": 31,
+          "latency_s": 0.872,
+          "error": null
+        }
+      ]
+    },
+    {
+      "prompt_label": "creative",
+      "prompt": "Invent a name for a command-line tool that turns merged pull requests into a release changelog, and write a tagline of at most six words for it. Reply with exactly one line in the form: Name - tagline. Nothing else.",
+      "temperature": 1.2,
+      "top_p": null,
+      "seed": 42,
+      "runs": [
+        {
+          "index": 1,
+          "text": "",
+          "finish_reason": "length",
+          "prompt_tokens": 118,
+          "completion_tokens": 256,
+          "reasoning_tokens": 254,
+          "latency_s": 0.998,
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "",
+          "finish_reason": "length",
+          "prompt_tokens": 118,
+          "completion_tokens": 256,
+          "reasoning_tokens": 254,
+          "latency_s": 1.14,
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "",
+          "finish_reason": "length",
+          "prompt_tokens": 118,
+          "completion_tokens": 256,
+          "reasoning_tokens": 254,
+          "latency_s": 1.361,
+          "error": null
+        },
+        {
+          "index": 4,
+          "text": "",
+          "finish_reason": "length",
+          "prompt_tokens": 118,
+          "completion_tokens": 256,
+          "reasoning_tokens": 254,
+          "latency_s": 1.778,
+          "error": null
+        },
+        {
+          "index": 5,
+          "text": "",
+          "finish_reason": "length",
+          "prompt_tokens": 118,
+          "completion_tokens": 256,
+          "reasoning_tokens": 254,
+          "latency_s": 2.222,
+          "error": null
+        }
+      ]
+    },
+    {
+      "prompt_label": "creative",
+      "prompt": "Invent a name for a command-line tool that turns merged pull requests into a release changelog, and write a tagline of at most six words for it. Reply with exactly one line in the form: Name - tagline. Nothing else.",
+      "temperature": 1.0,
+      "top_p": 1.0,
+      "seed": null,
+      "runs": [
+        {
+          "index": 1,
+          "text": "",
+          "finish_reason": "length",
+          "prompt_tokens": 118,
+          "completion_tokens": 256,
+          "reasoning_tokens": 254,
+          "latency_s": 2.526,
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "MergeLog - Automated changelogs from merged PRs",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 247,
+          "reasoning_tokens": 227,
+          "latency_s": 1.118,
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "Changelogify - Generate release notes from PRs",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 182,
+          "reasoning_tokens": 163,
+          "latency_s": 0.944,
+          "error": null
+        },
+        {
+          "index": 4,
+          "text": "",
+          "finish_reason": "length",
+          "prompt_tokens": 118,
+          "completion_tokens": 256,
+          "reasoning_tokens": 254,
+          "latency_s": 0.996,
+          "error": null
+        },
+        {
+          "index": 5,
+          "text": "MergeLog - From PRs to polished release notes",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 180,
+          "reasoning_tokens": 161,
+          "latency_s": 1.262,
+          "error": null
+        }
+      ]
+    },
+    {
+      "prompt_label": "creative",
+      "prompt": "Invent a name for a command-line tool that turns merged pull requests into a release changelog, and write a tagline of at most six words for it. Reply with exactly one line in the form: Name - tagline. Nothing else.",
+      "temperature": 1.0,
+      "top_p": 0.1,
+      "seed": null,
+      "runs": [
+        {
+          "index": 1,
+          "text": "",
+          "finish_reason": "length",
+          "prompt_tokens": 118,
+          "completion_tokens": 256,
+          "reasoning_tokens": 251,
+          "latency_s": 1.132,
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "",
+          "finish_reason": "length",
+          "prompt_tokens": 118,
+          "completion_tokens": 256,
+          "reasoning_tokens": 251,
+          "latency_s": 1.32,
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "",
+          "finish_reason": "length",
+          "prompt_tokens": 118,
+          "completion_tokens": 256,
+          "reasoning_tokens": 251,
+          "latency_s": 2.344,
+          "error": null
+        },
+        {
+          "index": 4,
+          "text": "",
+          "finish_reason": "length",
+          "prompt_tokens": 118,
+          "completion_tokens": 256,
+          "reasoning_tokens": 251,
+          "latency_s": 1.471,
+          "error": null
+        },
+        {
+          "index": 5,
+          "text": "",
+          "finish_reason": "length",
+          "prompt_tokens": 118,
+          "completion_tokens": 256,
+          "reasoning_tokens": 251,
+          "latency_s": 1.357,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

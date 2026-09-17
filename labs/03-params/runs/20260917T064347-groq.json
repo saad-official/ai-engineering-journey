@@ -1,0 +1,543 @@
+{
+  "lab": "03-params",
+  "started_at": "2026-09-17T06:43:47.548449+00:00",
+  "finished_at": "2026-09-17T06:45:25.650044+00:00",
+  "provider": "groq",
+  "model": "openai/gpt-oss-20b",
+  "runs_per_block": 5,
+  "max_tokens": 1024,
+  "min_seconds_between_calls": 2.0,
+  "blocks": [
+    {
+      "prompt_label": "creative",
+      "prompt": "Invent a name for a command-line tool that turns merged pull requests into a release changelog, and write a tagline of at most six words for it. Reply with exactly one line in the form: Name - tagline. Nothing else.",
+      "temperature": 0.0,
+      "top_p": null,
+      "seed": null,
+      "runs": [
+        {
+          "index": 1,
+          "text": "MergeLog - Turn merged PRs into changelog.",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 271,
+          "reasoning_tokens": 251,
+          "latency_s": 4.695,
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "MergeLog - Turn merged PRs into changelog.",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 270,
+          "reasoning_tokens": 250,
+          "latency_s": 1.36,
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "MergeLog - Turn merged PRs into changelog.",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 270,
+          "reasoning_tokens": 250,
+          "latency_s": 1.591,
+          "error": null
+        },
+        {
+          "index": 4,
+          "text": "MergeLog - Turn merged PRs into changelog.",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 270,
+          "reasoning_tokens": 250,
+          "latency_s": 1.186,
+          "error": null
+        },
+        {
+          "index": 5,
+          "text": "MergeLog - Turn merged PRs into changelog.",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 271,
+          "reasoning_tokens": 251,
+          "latency_s": 1.212,
+          "error": null
+        }
+      ]
+    },
+    {
+      "prompt_label": "creative",
+      "prompt": "Invent a name for a command-line tool that turns merged pull requests into a release changelog, and write a tagline of at most six words for it. Reply with exactly one line in the form: Name - tagline. Nothing else.",
+      "temperature": 0.7,
+      "top_p": null,
+      "seed": null,
+      "runs": [
+        {
+          "index": 1,
+          "text": "PRChangelog - Auto-generate changelogs from merged PRs",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 362,
+          "reasoning_tokens": 339,
+          "latency_s": 1.668,
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "PRChangelog - Merge PRs into changelog.",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 381,
+          "reasoning_tokens": 361,
+          "latency_s": 2.063,
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "Changelogify - Turn merged PRs into release notes.",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 327,
+          "reasoning_tokens": 306,
+          "latency_s": 1.5,
+          "error": null
+        },
+        {
+          "index": 4,
+          "text": "MergeLog - Automate changelog creation from merges.",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 339,
+          "reasoning_tokens": 319,
+          "latency_s": 4.011,
+          "error": null
+        },
+        {
+          "index": 5,
+          "text": "ReleaseLog - Merge PRs into release notes.",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 291,
+          "reasoning_tokens": 272,
+          "latency_s": 1.206,
+          "error": null
+        }
+      ]
+    },
+    {
+      "prompt_label": "creative",
+      "prompt": "Invent a name for a command-line tool that turns merged pull requests into a release changelog, and write a tagline of at most six words for it. Reply with exactly one line in the form: Name - tagline. Nothing else.",
+      "temperature": 1.2,
+      "top_p": null,
+      "seed": null,
+      "runs": [
+        {
+          "index": 1,
+          "text": "ReleaseNotesCLI - Merged PRs, ready notes.",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 397,
+          "reasoning_tokens": 376,
+          "latency_s": 1.512,
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "ReleaseMate - Consolidate PRs into changelogs",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 442,
+          "reasoning_tokens": 422,
+          "latency_s": 0.969,
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "MergeLog - Transform PRs to changelog",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 248,
+          "reasoning_tokens": 230,
+          "latency_s": 1.099,
+          "error": null
+        },
+        {
+          "index": 4,
+          "text": "MergeLog - Summarize merged pull requests",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 268,
+          "reasoning_tokens": 250,
+          "latency_s": 1.361,
+          "error": null
+        },
+        {
+          "index": 5,
+          "text": "ChangelogCLI - Generate release notes from PRs",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 271,
+          "reasoning_tokens": 252,
+          "latency_s": 2.075,
+          "error": null
+        }
+      ]
+    },
+    {
+      "prompt_label": "factual",
+      "prompt": "Which HTTP status code means the resource is gone permanently and is not coming back? Reply with the three-digit number only. Nothing else.",
+      "temperature": 0.0,
+      "top_p": null,
+      "seed": null,
+      "runs": [
+        {
+          "index": 1,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 72,
+          "reasoning_tokens": 62,
+          "latency_s": 4.463,
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 72,
+          "reasoning_tokens": 62,
+          "latency_s": 1.046,
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 72,
+          "reasoning_tokens": 62,
+          "latency_s": 1.469,
+          "error": null
+        },
+        {
+          "index": 4,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 72,
+          "reasoning_tokens": 62,
+          "latency_s": 0.837,
+          "error": null
+        },
+        {
+          "index": 5,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 72,
+          "reasoning_tokens": 62,
+          "latency_s": 1.138,
+          "error": null
+        }
+      ]
+    },
+    {
+      "prompt_label": "factual",
+      "prompt": "Which HTTP status code means the resource is gone permanently and is not coming back? Reply with the three-digit number only. Nothing else.",
+      "temperature": 0.7,
+      "top_p": null,
+      "seed": null,
+      "runs": [
+        {
+          "index": 1,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 45,
+          "reasoning_tokens": 35,
+          "latency_s": 1.196,
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 52,
+          "reasoning_tokens": 42,
+          "latency_s": 1.082,
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 66,
+          "reasoning_tokens": 56,
+          "latency_s": 1.13,
+          "error": null
+        },
+        {
+          "index": 4,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 72,
+          "reasoning_tokens": 62,
+          "latency_s": 1.037,
+          "error": null
+        },
+        {
+          "index": 5,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 58,
+          "reasoning_tokens": 48,
+          "latency_s": 0.617,
+          "error": null
+        }
+      ]
+    },
+    {
+      "prompt_label": "factual",
+      "prompt": "Which HTTP status code means the resource is gone permanently and is not coming back? Reply with the three-digit number only. Nothing else.",
+      "temperature": 1.2,
+      "top_p": null,
+      "seed": null,
+      "runs": [
+        {
+          "index": 1,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 54,
+          "reasoning_tokens": 44,
+          "latency_s": 0.535,
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 65,
+          "reasoning_tokens": 55,
+          "latency_s": 1.422,
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 72,
+          "reasoning_tokens": 62,
+          "latency_s": 1.793,
+          "error": null
+        },
+        {
+          "index": 4,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 44,
+          "reasoning_tokens": 34,
+          "latency_s": 0.918,
+          "error": null
+        },
+        {
+          "index": 5,
+          "text": "410",
+          "finish_reason": "stop",
+          "prompt_tokens": 98,
+          "completion_tokens": 56,
+          "reasoning_tokens": 46,
+          "latency_s": 0.673,
+          "error": null
+        }
+      ]
+    },
+    {
+      "prompt_label": "creative",
+      "prompt": "Invent a name for a command-line tool that turns merged pull requests into a release changelog, and write a tagline of at most six words for it. Reply with exactly one line in the form: Name - tagline. Nothing else.",
+      "temperature": 1.2,
+      "top_p": null,
+      "seed": 42,
+      "runs": [
+        {
+          "index": 1,
+          "text": "Changelogify - From PRs to Releases",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 445,
+          "reasoning_tokens": 427,
+          "latency_s": 1.08,
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "Changelogify - Generate release notes from merged PRs.",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 298,
+          "reasoning_tokens": 277,
+          "latency_s": 0.854,
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "Changelogify - Generate release notes from merged PRs.",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 320,
+          "reasoning_tokens": 299,
+          "latency_s": 1.315,
+          "error": null
+        },
+        {
+          "index": 4,
+          "text": "Changelogify - From PRs to Releases",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 445,
+          "reasoning_tokens": 427,
+          "latency_s": 2.103,
+          "error": null
+        },
+        {
+          "index": 5,
+          "text": "MergeLog - From PRs to Releases",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 537,
+          "reasoning_tokens": 520,
+          "latency_s": 3.459,
+          "error": null
+        }
+      ]
+    },
+    {
+      "prompt_label": "creative",
+      "prompt": "Invent a name for a command-line tool that turns merged pull requests into a release changelog, and write a tagline of at most six words for it. Reply with exactly one line in the form: Name - tagline. Nothing else.",
+      "temperature": 1.0,
+      "top_p": 1.0,
+      "seed": null,
+      "runs": [
+        {
+          "index": 1,
+          "text": "PRChangelog - Auto-generate release notes from PRs",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 281,
+          "reasoning_tokens": 260,
+          "latency_s": 0.895,
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "Changelogify - Automate release notes from merged PRs.",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 295,
+          "reasoning_tokens": 273,
+          "latency_s": 1.124,
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "PRLog - Turn merged PRs into changelog.",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 323,
+          "reasoning_tokens": 303,
+          "latency_s": 1.672,
+          "error": null
+        },
+        {
+          "index": 4,
+          "text": "MergeNotes - Turn merges into clear release notes",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 253,
+          "reasoning_tokens": 235,
+          "latency_s": 1.317,
+          "error": null
+        },
+        {
+          "index": 5,
+          "text": "MergeLog - From PR merges to release notes.",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 347,
+          "reasoning_tokens": 328,
+          "latency_s": 1.016,
+          "error": null
+        }
+      ]
+    },
+    {
+      "prompt_label": "creative",
+      "prompt": "Invent a name for a command-line tool that turns merged pull requests into a release changelog, and write a tagline of at most six words for it. Reply with exactly one line in the form: Name - tagline. Nothing else.",
+      "temperature": 1.0,
+      "top_p": 0.1,
+      "seed": null,
+      "runs": [
+        {
+          "index": 1,
+          "text": "MergeLog - Turn merged PRs into changelog.",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 271,
+          "reasoning_tokens": 251,
+          "latency_s": 1.437,
+          "error": null
+        },
+        {
+          "index": 2,
+          "text": "MergeLog - Turn merged PRs into changelog.",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 270,
+          "reasoning_tokens": 250,
+          "latency_s": 0.814,
+          "error": null
+        },
+        {
+          "index": 3,
+          "text": "MergeLog - Turn merged PRs into changelog.",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 271,
+          "reasoning_tokens": 251,
+          "latency_s": 0.767,
+          "error": null
+        },
+        {
+          "index": 4,
+          "text": "MergeLog - Turn merged PRs into changelog.",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 271,
+          "reasoning_tokens": 251,
+          "latency_s": 0.749,
+          "error": null
+        },
+        {
+          "index": 5,
+          "text": "MergeLog - Turn merged PRs into changelog.",
+          "finish_reason": "stop",
+          "prompt_tokens": 118,
+          "completion_tokens": 271,
+          "reasoning_tokens": 251,
+          "latency_s": 1.098,
+          "error": null
+        }
+      ]
+    }
+  ]
+}
