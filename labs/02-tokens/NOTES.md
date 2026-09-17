@@ -79,6 +79,44 @@ vocabulary** — the opposite of the intuitive explanation.
 
 ## Learned
 
+> Drafted by the `pm` agent on 2026-09-17 at Saad's request. These are not yet Saad's own
+> words - read, correct, and replace anything you would have put differently. Anything you
+> rewrite yourself, delete this line for.
+
+**The 18-vs-88 gap was the wrapper, not the vocabulary.** The intuitive answer assumed the two
+providers cut the same string into different numbers of pieces, but on `prose-en` Gemini's own
+`countTokens` returned exactly the local o200k number (81 vs 81), and the whole lab 01 gap
+reproduced as arithmetic on a 17-token prompt: 17+1=18 and 17+71=88, exact on both providers.
+The tokenizer explanation would have been the right one if the comparison had been between
+*bare-string* counts on content the vocabularies actually disagree about - pretty JSON is +43
+and URLs +28 on Gemini vs o200k - which is to say vocabulary dominates on long
+punctuation-dense payloads and is irrelevant on a 17-token English sentence.
+
+**A constant overhead is a tax on call count, not on prompt size.** +71 on every one of the six
+texts means the overhead as a percentage is entirely determined by how small the prompt is: 418%
+on the 17-token lab 01 prompt, 33% on the 216-token TypeScript sample, ~0.35% on a 20k-token one.
+So N small calls pay 71N tokens of scaffolding and one batched call with N items inside pays 71
+once - which makes "one call per commit" an expensive architecture before a single word of the
+prompt is written.
+
+**Gemini's vocabulary is tuned for natural language and pays for machine text.** It beats o200k
+on Urdu (119 vs 129, -10) and loses on pretty JSON (+43), URLs (+28) and TypeScript (+20). What
+I do with that: refuse to apply a single correction factor to a local estimate, and carry a
+per-content-type margin instead - noting that diffs and JSON, the two things Changelog Forge
+actually sends, are exactly where the local number is least trustworthy.
+
+**Minifying JSON is a free win, within its scope.** `json-min` and `json-pretty` are
+`json.dumps` of the same Python object - identical meaning, +52% tokens locally (130 -> 198) and
++66% on Gemini (145 -> 241). It costs one `separators=(",", ":")` argument and nothing in
+quality, so yes. The limit is that it only applies to payloads I construct; whitespace inside
+text a user or a commit message wrote is not mine to strip.
+
+**Budget against `usage.prompt_tokens`, never the local count.** It is the only number that
+includes the chat template, and it is the number that is billed and rate-limited. The local
+count's error is both per-provider and per-content-type - 0 on English prose, +43 on pretty
+JSON, and blind to the +71 wrapper entirely - so it is a free lower bound for a pre-flight guard
+with a measured margin, and never the budget itself.
+
 <!-- Saad's own words. Aim at these, one or two sentences each:
      - the 18-vs-88 gap: it was the wrapper, not the vocabulary. Why did the intuitive
        answer (different tokenizers) turn out to be wrong here, and when WOULD it be right?

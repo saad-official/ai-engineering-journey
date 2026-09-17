@@ -1,6 +1,6 @@
 # Generation Parameters (temperature, top_p, top_k)
 
-**Status:** learning (concept understood on paper; exp-003 not yet run, no numbers, not yet in Saad's own words)
+**Status:** learning (exp-003 run on 2026-09-17 and its numbers are in `labs/03-params/NOTES.md`; this note is still agent-drafted and not yet in Saad's own words)
 **Phase:** 1   **Tags:** [F], llm-fundamentals / sampling / determinism / evals
 
 ## Concept

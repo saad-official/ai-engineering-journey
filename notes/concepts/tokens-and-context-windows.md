@@ -1,6 +1,9 @@
 # Tokens and Context Windows
 
-**Status:** understood (measured in exp-002; re-check when Changelog Forge applies it)
+**Status:** learning (downgraded from `understood` on 2026-09-17)
+*Why: the numbers are Saad's, measured in exp-002, but this note was drafted end to end by the
+`mentor` agent. It returns to `understood` when he can restate the 18-vs-88 result and the
+budgeting rule in his own words, without the note open.*
 **Phase:** 1   **Tags:** [F], llm-fundamentals / cost / context
 
 ## Concept

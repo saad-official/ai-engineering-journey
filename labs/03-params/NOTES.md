@@ -139,6 +139,63 @@ for and never see.
 
 ## Learned
 
+> Drafted by the `pm` agent on 2026-09-17 at Saad's request. These are not yet Saad's own
+> words - read, correct, and replace anything you would have put differently. Anything you
+> rewrite yourself, delete this line for.
+
+**Temperature 0 repeated 5/5, and that is still not determinism.** On both prompts the five
+runs at temp 0.0 were byte-identical (distinct 1/5, similarity 1.000), so the strongest claim I
+am entitled to is "not observed to differ in 5 runs, one provider, one model, one afternoon" -
+an observation, not a contract. The mechanism is why the word is wrong: temp 0 is greedy
+decoding, take the argmax, which only repeats if the logits are bit-for-bit identical, and on
+shared dynamically-batched inference they are not - float addition is not associative, reduction
+order depends on who else is in the batch, and gpt-oss is MoE so routing can shift with batch
+composition. A 1e-7 wobble between two near-tied candidates flips the argmax, and from that
+token on the completions diverge permanently.
+
+**Temperature is a knob on a distribution, and the prompt owns the distribution.** The same
+three temperatures took the creative prompt from 1 distinct / 1.000 to 5 distinct / 0.155, and
+moved the factual prompt not at all - 1 distinct / 1.000 at 0.0, 0.7 and 1.2 alike. Temperature
+does not add randomness, it decides how much of the model's own uncertainty is allowed to reach
+the output. Which means turning the temperature down to make a feature testable proves nothing
+until I measure it on the real prompt: on a spiky prompt temp 0 buys me nothing that 1.2 was not
+already giving me, and on a flat prompt it does not buy reproducibility either (section B).
+
+**Where I would ship each.** Temp 0 for extracting a structured "what changed in this release"
+object from raw release text to render in an in-app What's New screen - the output is parsed and
+laid out by the client, so variance there is a rendering bug, not a style choice; temp >= 0.7 for
+generating three alternative empty-state or onboarding microcopy lines that a human picks from in
+review, because there are many good phrasings and one bland repeated line is the actual failure.
+`[assumption - replace with a real feature of yours]`
+
+**Reshape and truncate reach the same place, and only one of them is reversible by the model.**
+top_p 0.1 at temp 1.0 collapsed to 1 distinct / 1.000 - the exact string temp 0.0 produced -
+while temp 1.0 with top_p 1.0 gave 5 distinct / 0.291. The difference bites when the right answer
+lives in the tail: a rare but valid identifier or package name in generated code, a non-Latin
+word, an uncommon enum value, an unusual API name. A low temperature makes that token unlikely
+and still reachable; a low top_p deletes it from the candidate set entirely and no amount of
+context can bring it back. So "temperature 0.7 + top_p 0.9" is now something I read as a copied
+default rather than a decision - this run shows top_p alone can dominate the result with
+temperature held flat, so setting both means I cannot attribute my own output to either knob.
+Pick one, leave the other at its default, and log both.
+
+**A seed narrows, it does not pin.** `seed=42` at temp 1.2 gave 3 distinct in 5 with similarity
+0.627, against 5 distinct / 0.155 unseeded - a measurable narrowing and not a reproduction,
+because the seed fixes the sampler's RNG and the sampler is only the last step. The only reliable
+way to make an LLM call reproducible in a test or a cache is to stop re-deriving it: record the
+output once as a fixture or a cache entry, replay that, and assert properties (schema parses,
+required fields present, values in range) rather than strings.
+
+**The invisible tokens are most of the bill.** Hidden reasoning was 84-95% of every output
+block - creative@0.7 was 319 of 340 tokens for a one-line, ~10-word answer - so a cost estimate
+built from the visible text under-counts the expensive half of the call by roughly 10x on this
+model. In Changelog Forge that lands hardest on the map stage: one classification call per commit
+group across a 400-commit range, where the visible answer is a single category word but each call
+still pays a few hundred invisible output tokens plus lab 02's constant +71 input wrapper. That
+is the concrete argument for batching classification into fewer calls and routing it to a
+non-reasoning model - and run 0 is the other half of it, where `max_tokens=256` left nothing for
+the visible answer on 22 of 45 calls and the whole run measured nothing.
+
 <!-- Saad's own words. Do not paraphrase the script's output back — the script already
      printed the numbers; this section is what they MEAN. One or two sentences each:
 
@@ -169,6 +226,36 @@ for and never see.
        and where does that bite hardest in Changelog Forge? -->
 
 ## Open questions for later labs
+
+> Drafted by the `pm` agent on 2026-09-17 at Saad's request. These are not yet Saad's own
+> words - read, correct, and replace anything you would have put differently. Anything you
+> rewrite yourself, delete this line for.
+
+Carried forward, in priority order:
+
+1. **Is lab 02's +71 chat-template constant Harmony-specific or Groq-specific?** Still open from
+   lab 02. gpt-oss-20b uses the Harmony format; the +71 may belong to that format, not to Groq.
+   Settle it by measuring `usage.prompt_tokens` for one fixed string against a second Groq model
+   that is not gpt-oss, and against gpt-oss on another host. It matters because the batching
+   argument in lab 02 is sized by that constant.
+2. **Does the 84-95% reasoning share hold on other models, or is it this one?** Every block here
+   was gpt-oss-20b. Measure the same prompts on a non-reasoning model and on a model that exposes
+   `reasoning_effort`. This decides directly whether a reasoning model is usable for Changelog
+   Forge's high-volume map stage, and it is the single number that would change that design.
+3. **Does `seed` behave the same on a non-reasoning model?** Here it narrowed (0.155 -> 0.627) but
+   did not pin. A model with no hidden chain of thought has far less generation upstream of the
+   sampler to diverge in, so the seed may pin much harder - or reveal that the non-determinism was
+   never in the sampler at all. Same protocol: max temperature, 5 runs, seeded vs unseeded.
+4. **Does the temp-0 result hold on Gemini?** One `--provider gemini` run settles it. R1 says it
+   will be slow; budget for it rather than skipping it, because the determinism claim currently
+   rests on one provider.
+5. **Does structured output (`json_schema`, lab 04) narrow the distribution enough that
+   temperature stops mattering?** If the schema constrains the grammar, what is left to sample?
+6. **When does the similarity metric start lying?** `difflib` over words measures surface form, so
+   two outputs that mean the same thing in different words score low. The embedding-based version
+   is a Phase 2 cost question.
+7. **Which of `max_tokens`, `stop`, `frequency_penalty`, `presence_penalty` belong in `llm-kit`'s
+   surface and which are per-call?** None were touched here.
 
 <!-- Carry at least one forward. Candidates:
      - does the temp-0 result hold on a non-reasoning model, and on Gemini? (one

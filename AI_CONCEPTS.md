@@ -47,7 +47,7 @@ Links checked, with dates.
 ## Index
 
 ### Phase 1: LLM fundamentals and Python
-- [x] [tokens-and-context-windows](notes/concepts/tokens-and-context-windows.md) `[F]` — understood; measured in exp-002 (`labs/02-tokens`)
+- [~] [tokens-and-context-windows](notes/concepts/tokens-and-context-windows.md) `[F]` — note drafted (status `learning`, downgraded 2026-09-17); numbers measured in exp-002 (`labs/02-tokens`), but the note is AI-drafted and not yet restated in Saad's own words
 - [ ] prompting-and-message-roles `[F]`
 - [~] [generation-parameters](notes/concepts/generation-parameters.md) `[F]` — note drafted (status `learning`); awaiting exp-003 numbers from `labs/03-params`
 - [ ] structured-outputs `[F]`
