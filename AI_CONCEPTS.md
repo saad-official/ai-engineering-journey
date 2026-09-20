@@ -51,7 +51,7 @@ Links checked, with dates.
 - [ ] prompting-and-message-roles `[F]`
 - [~] [generation-parameters](notes/concepts/generation-parameters.md) `[F]` — note drafted (status `learning`); awaiting exp-003 numbers from `labs/03-params`
 - [ ] structured-outputs `[F]`
-- [ ] tool-calling `[F]`
+- [~] [tool-calling](notes/concepts/tool-calling.md) `[F]` — note drafted 2026-09-20 (status `learning`); agent-drafted ahead of `labs/04-tools`, awaiting exp-005 numbers and Saad's own restatement
 - [ ] streaming `[F]`
 - [ ] hallucination-and-grounding `[F]`
 - [ ] provider-abstraction `[F]`
