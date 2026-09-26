@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab 05 Stream</title>
+<style>
+  :root {
+    --bg: #fafaf9; --panel: #ffffff; --text: #1c1917; --muted: #78716c;
+    --line: #e7e5e4; --accent: #2563eb; --warn: #b45309; --bad: #b91c1c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1917; --panel: #292524; --text: #f5f5f4; --muted: #a8a29e;
+      --line: #44403c; --accent: #60a5fa; --warn: #fbbf24; --bad: #f87171;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 15px/1.55 system-ui, sans-serif; }
+  main { max-width: 820px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 16px; }
+  textarea { width: 100%; min-height: 72px; padding: 10px; font: inherit; color: inherit;
+             background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+  .row { display: flex; gap: 8px; margin: 8px 0 16px; align-items: center; flex-wrap: wrap; }
+  button { font: inherit; padding: 8px 16px; border-radius: 8px; cursor: pointer;
+           border: 1px solid var(--line); background: var(--panel); color: var(--text); }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  button:disabled { opacity: .45; cursor: default; }
+  .timers { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 8px; margin-bottom: 16px; }
+  .timer { background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+           padding: 8px 10px; }
+  .timer b { display: block; font: 600 18px/1.3 ui-monospace, monospace; }
+  .timer span { color: var(--muted); font-size: 12px; }
+  .timer.headline { border-color: var(--accent); }
+  details { background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+            padding: 8px 12px; margin-bottom: 12px; }
+  summary { cursor: pointer; color: var(--muted); }
+  #reasoning { color: var(--muted); white-space: pre-wrap; font-size: 13px; margin-top: 8px; }
+  #content { white-space: pre-wrap; background: var(--panel); border: 1px solid var(--line);
+             border-radius: 8px; padding: 12px 14px; min-height: 120px; }
+  .meta { color: var(--muted); font: 13px/1.5 ui-monospace, monospace; margin-top: 12px;
+          overflow-wrap: anywhere; }
+  #status.warn { color: var(--warn); } #status.bad { color: var(--bad); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Lab 05 - streaming, measured in the browser</h1>
+  <p class="sub">POST /stream &rarr; fetch + ReadableStream &rarr; a hand-written SSE parser.</p>
+
+  <textarea id="prompt">Explain how a changelog generator could group commits into sections for release notes, in three short paragraphs.</textarea>
+  <div class="row">
+    <button id="send" class="primary">Stream</button>
+    <button id="stop" disabled>Stop</button>
+    <span id="status">idle</span>
+  </div>
+
+  <div class="timers">
+    <div class="timer"><b id="t-headers">-</b><span>response headers</span></div>
+    <div class="timer"><b id="t-byte">-</b><span>first byte (any event)</span></div>
+    <div class="timer"><b id="t-reason">-</b><span>first reasoning</span></div>
+    <div class="timer headline"><b id="t-visible">-</b><span>first VISIBLE token</span></div>
+    <div class="timer"><b id="t-total">-</b><span>total (live)</span></div>
+  </div>
+
+  <details id="reasoning-box">
+    <summary>Hidden reasoning (<span id="r-count">0</span> chars) - a product would not show this</summary>
+    <div id="reasoning"></div>
+  </details>
+  <div id="content"></div>
+  <div class="meta" id="meta"></div>
+  <div class="meta" id="selftest"></div>
+</main>
+
+<script>
+/*
+ * WHY NOT EventSource? It is the browser's built-in SSE client, and it cannot do this job:
+ *   - GET only. There is no way to send a request BODY, and the prompt has to go somewhere.
+ *     (Putting it in the query string puts user text into URLs, server logs and history.)
+ *   - No custom headers, so no `Authorization: Bearer ...` for a real app's session token.
+ *   - It auto-reconnects on drop, which for an LLM call means silently paying for the
+ *     whole generation AGAIN from the top.
+ * So: plain fetch() with a POST body, read response.body as a stream, parse SSE by hand.
+ * The parsing is ~20 lines, and it is exactly what the Vercel AI SDK's useChat does for you.
+ */
+
+// ---- parser start (index.html is the only copy; a Node test slices this block out)
+
+/*
+ * The SSE parser, and the classic bug it exists to avoid.
+ *
+ * reader.read() hands back whatever bytes the network delivered. TCP has no idea where one
+ * SSE event ends. One read can hold three events, or half of one:
+ *
+ *   read 1:  'data: {"type":"content","text":"Hel'
+ *   read 2:  'lo"}\n\ndata: {"type":"content","text":" world"}\n\n'
+ *
+ * The naive version - split each read on "\n\n" and JSON.parse every piece - calls
+ * JSON.parse('data: {"type":"content","text":"Hel') on read 1 and throws, or worse, drops
+ * the fragment. It works perfectly on localhost (small writes arrive whole) and fails in
+ * production behind a proxy that re-chunks the body. That is why it survives code review.
+ *
+ * The fix is a line buffer:
+ *   1. append the new text to `buffer`
+ *   2. while buffer contains a complete event (a "\n\n"), cut it off the FRONT and parse it
+ *   3. whatever is left after the last "\n\n" is an unfinished event: KEEP it for next read
+ * Nothing is parsed until its terminating blank line has arrived, so where the network
+ * happened to cut the bytes stops mattering.
+ */
+function createSSEParser(onEvent) {
+  let buffer = "";
+  let splitEvents = 0; // events that were completed from a fragment carried over from before
+  return {
+    push(text) {
+      const carried = buffer.length > 0;
+      // Spec allows CRLF line endings. Normalising AFTER concatenation means a "\r" at the
+      // end of one read and its "\n" at the start of the next still become one "\n".
+      // (A lone "\r" is also legal SSE; this server never sends one, so it is not handled.)
+      buffer = (buffer + text).replace(/\r\n/g, "\n");
+      let boundary;
+      let first = true;
+      while ((boundary = buffer.indexOf("\n\n")) !== -1) {
+        const block = buffer.slice(0, boundary);
+        buffer = buffer.slice(boundary + 2);
+        if (first && carried) splitEvents++;
+        first = false;
+        // An event can have several `data:` lines (joined with "\n"); lines starting ":" are
+        // comments (often used as keep-alives). Anything else is ignored here.
+        const data = block
+          .split("\n")
+          .filter((line) => line.startsWith("data:"))
+          .map((line) => line.slice(5).replace(/^ /, ""))
+          .join("\n");
+        if (data) onEvent(JSON.parse(data));
+      }
+    },
+    remainder: () => buffer,
+    splitEvents: () => splitEvents,
+  };
+}
+
+/*
+ * Prove the buffer on page load, no server needed: encode two events (one containing a
+ * paragraph break and multi-byte UTF-8), cut the BYTES at every possible position, feed both
+ * halves through TextDecoder + parser, and require the exact same events out every time.
+ * Cutting bytes, not characters, also tests the second split bug: a UTF-8 character cut in
+ * half. TextDecoder's {stream: true} holds the incomplete byte sequence until the rest
+ * arrives; without it you get U+FFFD replacement characters mid-word.
+ */
+function selfTestParser() {
+  const events = [
+    { type: "content", text: "para one\n\npara two, café, 🚀" },
+    { type: "usage", prompt_tokens: 1, completion_tokens: 2, reasoning_tokens: null },
+  ];
+  const wire = events.map((e) => `data: ${JSON.stringify(e)}\n\n`).join("");
+  const bytes = new TextEncoder().encode(wire);
+  for (let cut = 1; cut < bytes.length; cut++) {
+    const got = [];
+    const parser = createSSEParser((e) => got.push(e));
+    const decoder = new TextDecoder();
+    parser.push(decoder.decode(bytes.slice(0, cut), { stream: true }));
+    parser.push(decoder.decode(bytes.slice(cut), { stream: true }));
+    parser.push(decoder.decode());
+    if (JSON.stringify(got) !== JSON.stringify(events)) return `FAILED at byte ${cut}`;
+  }
+  return `passed at all ${bytes.length - 1} byte split points`;
+}
+
+// ---- parser end
+
+const $ = (id) => document.getElementById(id);
+let controller = null;
+
+function fmt(ms) { return ms == null ? "-" : `${(ms / 1000).toFixed(2)} s`; }
+function setStatus(text, cls = "") { $("status").textContent = text; $("status").className = cls; }
+
+async function run() {
+  // Reset the view.
+  for (const id of ["t-headers", "t-byte", "t-reason", "t-visible", "t-total"]) $(id).textContent = "-";
+  $("reasoning").textContent = ""; $("content").textContent = ""; $("meta").textContent = "";
+  $("r-count").textContent = "0";
+  $("send").disabled = true; $("stop").disabled = false;
+  setStatus("waiting for the server...");
+
+  const t = { start: performance.now(), byte: null, reason: null, visible: null, end: null };
+  const since = () => performance.now() - t.start;
+  let reads = 0, events = 0, reasoningChars = 0, usage = null, done = null, parser = null;
+  let errored = false;
+
+  // Live "total" ticker. requestAnimationFrame rather than setInterval: it runs at paint
+  // rate and pauses in a background tab, which is all a stopwatch on screen needs.
+  let raf = 0;
+  const tick = () => { $("t-total").textContent = fmt(since()); raf = requestAnimationFrame(tick); };
+  raf = requestAnimationFrame(tick);
+
+  function onEvent(ev) {
+    events++;
+    if (ev.type === "reasoning") {
+      if (t.reason == null) { t.reason = since(); $("t-reason").textContent = fmt(t.reason); }
+      reasoningChars += ev.text.length;
+      $("r-count").textContent = reasoningChars;
+      $("reasoning").append(ev.text);
+      setStatus("model is reasoning - nothing visible yet");
+    } else if (ev.type === "content") {
+      if (t.visible == null) { t.visible = since(); $("t-visible").textContent = fmt(t.visible); }
+      // append() adds a Text node: model output is untrusted, so it must NEVER go through
+      // innerHTML (a prompt-injected "<img onerror=...>" would run). A Text node also avoids
+      // re-rendering the whole answer on every chunk the way `textContent +=` would.
+      $("content").append(ev.text);
+      setStatus("streaming content");
+    } else if (ev.type === "usage") {
+      usage = ev;
+    } else if (ev.type === "done") {
+      done = ev;
+    } else if (ev.type === "error") {
+      errored = true;
+      setStatus(`server error: ${ev.message}`, "bad");
+    }
+  }
+
+  controller = new AbortController();
+  try {
+    const res = await fetch("/stream", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt: $("prompt").value }),
+      // Abort rejects the pending fetch/read AND closes the connection. The server's
+      // disconnect check sees that, and closes ITS connection to the provider.
+      signal: controller.signal,
+    });
+    $("t-headers").textContent = fmt(since());
+    if (!res.ok) { setStatus(`HTTP ${res.status}: ${await res.text()}`, "bad"); return; }
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder(); // bytes -> text; {stream:true} below matters, see self-test
+    parser = createSSEParser(onEvent);
+    for (;;) {
+      const { value, done: finished } = await reader.read();
+      if (finished) break;
+      reads++;
+      if (t.byte == null) { t.byte = since(); $("t-byte").textContent = fmt(t.byte); }
+      parser.push(decoder.decode(value, { stream: true }));
+    }
+    parser.push(decoder.decode()); // flush any bytes TextDecoder was still holding
+    if (errored) { /* keep the server's error message on screen */ }
+    else if (parser.remainder().trim()) setStatus("stream ended in the middle of an event", "warn");
+    else if (!done) setStatus("stream ended with no 'done' event - truncated?", "warn");
+    else if (done.finish_reason === "length") setStatus("finish_reason=length: budget ran out", "warn");
+    else setStatus(`done (finish_reason=${done.finish_reason})`);
+  } catch (err) {
+    if (err.name === "AbortError") {
+      setStatus("stopped by you - the server log should say 'client disconnected'", "warn");
+    } else {
+      setStatus(`${err.name}: ${err.message}`, "bad");
+    }
+  } finally {
+    cancelAnimationFrame(raf);
+    t.end = since();
+    $("t-total").textContent = fmt(t.end);
+    $("send").disabled = false; $("stop").disabled = true;
+    controller = null;
+    const lines = [
+      `network reads ${reads} | SSE events ${events} | events split across two reads ${parser ? parser.splitEvents() : 0}`,
+      usage
+        ? `usage: in ${usage.prompt_tokens} / out ${usage.completion_tokens} (reasoning ${usage.reasoning_tokens})`
+        : "usage: none received (a stopped stream never gets the final usage event)",
+    ];
+    if (done && done.server_ms) {
+      const s = done.server_ms;
+      lines.push(`server saw: first chunk ${fmt(s.first_chunk)}, first content ${fmt(s.first_content)}, total ${fmt(s.total)}`);
+      if (t.visible != null && s.first_content != null) {
+        lines.push(`browser - server, first visible: ${fmt(t.visible - s.first_content)} (network + buffering + request parsing)`);
+      }
+    }
+    $("meta").textContent = lines.join("\n");
+    $("meta").style.whiteSpace = "pre-wrap";
+  }
+}
+
+$("send").addEventListener("click", run);
+$("stop").addEventListener("click", () => controller && controller.abort());
+$("selftest").textContent = `SSE parser self-test: ${selfTestParser()}`;
+</script>
+</body>
+</html>

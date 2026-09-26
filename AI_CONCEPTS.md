@@ -52,7 +52,7 @@ Links checked, with dates.
 - [~] [generation-parameters](notes/concepts/generation-parameters.md) `[F]` — note drafted (status `learning`); awaiting exp-003 numbers from `labs/03-params`
 - [ ] structured-outputs `[F]`
 - [~] [tool-calling](notes/concepts/tool-calling.md) `[F]` — note drafted 2026-09-20 (status `learning`); agent-drafted ahead of `labs/04-tools`, awaiting exp-005 numbers and Saad's own restatement
-- [ ] streaming `[F]`
+- [~] [streaming](notes/concepts/streaming.md) `[F]` — note drafted 2026-09-26 (status `learning`); agent-drafted in parallel with `labs/05-stream`, awaiting its TTFC/TTFV/usage numbers and Saad's own restatement
 - [ ] hallucination-and-grounding `[F]`
 - [ ] provider-abstraction `[F]`
 - [ ] cost-and-latency-basics `[F]`
