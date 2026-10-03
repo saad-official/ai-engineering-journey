@@ -1,0 +1,40 @@
+# Teardown 02 / capture B: one real turn through the running app (2026-10-03, Gemini via harness)
+# Captured in-page by wrapping window.fetch (useChat's own request; guest session cookie).
+# The tool output's hourly arrays (168 timestamps + 168 temperatures) are elided as [...] here;
+# everything else is verbatim.
+
+## REQUEST  POST /api/chat   (note: ONE message, not the history)
+{"id":"8a369ed7-bfea-45e8-8f0b-be7d27fc95d9",
+ "message":{"parts":[{"text":"What is the weather in San Francisco?","type":"text"}],"role":"user","id":"4875030b-491a-4cd1-846b-86b8a0f67ca4"},
+ "selectedChatModel":"moonshotai/kimi-k2.5","selectedVisibilityType":"private"}
+
+## RESPONSE 200 in 4781 ms
+content-type: text/event-stream
+x-vercel-ai-ui-message-stream: v1
+x-accel-buffering: no
+
+## RAW BODY  (18 events, 6817 bytes; the tool-output-available event alone is 5230 bytes = 77%)
+data: {"data":{"message":"Waiting...","modelId":"moonshotai/kimi-k2.5","modelName":"Kimi K2.5","phase":"waiting"},"transient":true,"type":"data-waiting-status"}
+data: {"type":"start","messageId":"cc206d4c-bce9-46ff-8f3b-b96e1713958d"}
+data: {"data":"San Francisco Weather","type":"data-chat-title"}
+data: {"type":"start-step"}
+data: {"data":{"message":"Thinking...","modelId":"moonshotai/kimi-k2.5","modelName":"Kimi K2.5","phase":"thinking"},"transient":true,"type":"data-waiting-status"}
+data: {"type":"tool-input-start","toolCallId":"call_1245783","toolName":"getWeather","providerMetadata":{"google":{"thoughtSignature":"EmAKXgFp...Pphg="}},"dynamic":false}
+data: {"type":"tool-input-delta","toolCallId":"call_1245783","inputTextDelta":"{\"city\":\"San Francisco\"}"}
+data: {"type":"tool-input-available","toolCallId":"call_1245783","toolName":"getWeather","input":{"city":"San Francisco"},"providerMetadata":{"google":{"thoughtSignature":"EmAKXgFp...Pphg="}}}
+data: {"type":"tool-output-available","toolCallId":"call_1245783","output":{"latitude":37.763283,"longitude":-122.41286,"generationtime_ms":0.09,"utc_offset_seconds":-25200,"timezone":"America/Los_Angeles","timezone_abbreviation":"GMT-7","elevation":18,"current_units":{...},"current":{"time":"2026-10-03T11:15","interval":900,"temperature_2m":23.8},"hourly_units":{...},"hourly":{"time":[...168...],"temperature_2m":[...168...]},"daily_units":{...},"daily":{"time":[...7...],"sunrise":[...7...],"sunset":[...7...]},"cityName":"San Francisco"},"providerMetadata":{...},"dynamic":false}
+data: {"type":"finish-step"}
+data: {"type":"start-step"}
+data: {"type":"text-start","id":"0"}
+data: {"type":"text-delta","id":"0","delta":"The current"}
+data: {"type":"text-delta","id":"0","delta":" temperature in San Francisco is 23.8°C (75°F)."}
+data: {"type":"text-end","id":"0"}
+data: {"type":"finish-step"}
+data: {"type":"finish","finishReason":"stop"}
+data: [DONE]
+
+## Observations
+- No usage / cost anywhere in the stream (no messageMetadata on `finish`). Teardown 01's port sent it.
+- Server log for this turn: 1 non-streamed Gemini call (title), 2 streamed (step 1 tool call, step 2 answer),
+  plus geocoding-api.open-meteo.com and api.open-meteo.com.
+- "Kimi K2.5" labels are a harness artefact: every model id is routed to gemini-3.5-flash-lite.

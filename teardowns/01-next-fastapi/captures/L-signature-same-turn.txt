@@ -1,0 +1,3 @@
+signature present on call: True
+with signature: OK -> 'The current weather in Lahore is 31 degrees Celsius.'
+signature stripped: BadRequestError -> Error code: 400 - [{'error': {'code': 400, 'message': 'Function call is missing a thought_signature in functionCall parts. This is required for tools to work correctly, and missing thought_signature may lead to degraded model performance. Additional data, function call `default_api:get_current_weath

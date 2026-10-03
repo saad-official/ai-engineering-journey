@@ -1,0 +1,46 @@
+--- chunk 0
+{
+ "id": "H7zAaof-JpvZ7M8PiMau2Aw",
+ "choices": [
+  {
+   "delta": {
+    "role": "assistant",
+    "tool_calls": [
+     {
+      "id": "call_154548",
+      "function": {
+       "arguments": "{\"location\":\"Lahore\",\"unit\":\"celsius\"}",
+       "name": "get_current_weather"
+      },
+      "type": "function",
+      "extra_content": {
+       "google": {
+        "thought_signature": "EmAKXgFpFH0TyxfLQxGEuafthzzOha5qoQ6n3bN+rKckPDcIqEiUF5S6ZvIrnf6E4g9Wxl1zYagdUxKEq+/zGfn8+Q4xlsPVCFrmBcFQqA2mkQcTsm54yDYtRmH2mu85dq8="
+       }
+      }
+     }
+    ]
+   },
+   "index": 0
+  }
+ ],
+ "created": 1791015967,
+ "model": "gemini-3.5-flash-lite",
+ "object": "chat.completion.chunk"
+}
+--- chunk 1
+{
+ "id": "H7zAaof-JpvZ7M8PiMau2Aw",
+ "choices": [
+  {
+   "delta": {
+    "role": "assistant"
+   },
+   "finish_reason": "stop",
+   "index": 0
+  }
+ ],
+ "created": 1791015967,
+ "model": "gemini-3.5-flash-lite",
+ "object": "chat.completion.chunk"
+}

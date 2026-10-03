@@ -1,0 +1,5 @@
+{
+  "input": "0:\"The sky \"\n0:\"is blue.\"\nd:{\"finishReason\":\"stop\",\"usage\":{\"promptTokens\":9,\"completionTokens\":5}}\n",
+  "assistantMessage": null,
+  "error": null
+}

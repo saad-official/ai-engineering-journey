@@ -1,0 +1,43 @@
+# REQUEST BODY (what useChat sends)
+{"id":"chat-teardown-01","messages":[{"id":"msg-user-1","role":"user","parts":[{"type":"text","text":"What is the weather in Lahore in celsius?"}]}],"trigger":"submit-message"}
+
+# RESPONSE 200
+cache-control: no-cache
+content-type: text/event-stream; charset=utf-8
+date: Sat, 03 Oct 2026 08:31:08 GMT
+server: uvicorn
+transfer-encoding: chunked
+x-accel-buffering: no
+x-vercel-ai-ui-message-stream: v1
+
+# RAW BODY
+data: {"type": "start", "messageId": "msg-40c3447630c7"}
+
+data: {"type": "start-step"}
+
+data: {"type": "tool-input-start", "toolCallId": "call_1057582", "toolName": "get_current_weather"}
+
+data: {"type": "tool-input-delta", "toolCallId": "call_1057582", "inputTextDelta": "{\"unit\":\"celsius\",\"location\":\"Lahore\"}"}
+
+data: {"type": "tool-input-available", "toolCallId": "call_1057582", "toolName": "get_current_weather", "input": {"unit": "celsius", "location": "Lahore"}, "providerMetadata": {"google": {"thought_signature": "EmAKXgFpFH0TrXYW9a755N94O0nw5OeHTg7hC4PT7lvLty2Z7T1I53Ordwq3z1DccyPFsh9dz2MgyRtDR84epCoIohaIGvJoQxRyFwSaQHES2nNCDMj9WCNns0drMmGjxDY="}}}
+
+data: {"type": "tool-output-available", "toolCallId": "call_1057582", "output": {"temperature": 31, "unit": "celsius", "location": "Lahore"}}
+
+data: {"type": "finish-step"}
+
+data: {"type": "start-step"}
+
+data: {"type": "text-start", "id": "text-1"}
+
+data: {"type": "text-delta", "id": "text-1", "delta": "The current"}
+
+data: {"type": "text-delta", "id": "text-1", "delta": " weather in Lahore is 31 degrees Celsius."}
+
+data: {"type": "text-end", "id": "text-1"}
+
+data: {"type": "finish-step"}
+
+data: {"type": "finish", "finishReason": "stop", "messageMetadata": {"usage": {"inputTokens": 272, "outputTokens": 38}, "costUsd": 0.0001766, "model": "gemini-3.5-flash-lite"}}
+
+data: [DONE]
+

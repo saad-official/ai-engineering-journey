@@ -1,0 +1,3 @@
+generateId() -> "o7MR2KI5QSpHkFem" (16 chars)
+generateId(): insert FAILED -> 22P02 invalid input syntax for type uuid: "o7MR2KI5QSpHkFem"
+crypto.randomUUID(): insert OK

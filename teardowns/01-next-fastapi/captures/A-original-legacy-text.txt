@@ -1,0 +1,8 @@
+# REQUEST: legacy body, ?protocol=text
+HTTP/1.1 200 OK
+date: Sat, 03 Oct 2026 08:25:43 GMT
+server: uvicorn
+x-vercel-ai-data-stream: v1
+Transfer-Encoding: chunked
+
+The sky is blue because Earth's atmosphere scatters shorter wavelengths of light, like blue and violet, from the sun in all directions more than other colors. This phenomenon is known as Rayleigh scattering, and our eyes are simply more sensitive to the blue light than the violet.

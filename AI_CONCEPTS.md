@@ -53,6 +53,7 @@ Links checked, with dates.
 - [ ] structured-outputs `[F]`
 - [~] [tool-calling](notes/concepts/tool-calling.md) `[F]` — note drafted 2026-09-20 (status `learning`); agent-drafted ahead of `labs/04-tools`, awaiting exp-005 numbers and Saad's own restatement
 - [~] [streaming](notes/concepts/streaming.md) `[F]` — note drafted 2026-09-26 (status `learning`); agent-drafted in parallel with `labs/05-stream`, awaiting its TTFC/TTFV/usage numbers and Saad's own restatement
+- [~] [conversation-state-and-persistence](notes/concepts/conversation-state-and-persistence.md) `[F]` — note drafted 2026-10-03 (status `learning`) from teardown 02 (exp-022); who owns chat history, what shape is stored, what survives Stop/reload
 - [ ] hallucination-and-grounding `[F]`
 - [ ] provider-abstraction `[F]`
 - [ ] cost-and-latency-basics `[F]`

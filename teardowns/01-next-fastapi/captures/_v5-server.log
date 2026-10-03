@@ -1,0 +1,15 @@
+INFO:     Started server process [18748]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+INFO:     127.0.0.1:55044 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55045 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:     teardown01: in=106 out=49 cost=$0.000154 1543ms
+INFO:     127.0.0.1:55047 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:     teardown01: in=272 out=38 cost=$0.000177 4070ms
+INFO:     127.0.0.1:55053 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:     teardown01: in=272 out=38 cost=$0.000177 5515ms
+INFO:     127.0.0.1:55062 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:     teardown01: in=440 out=63 cost=$0.000290 12064ms
+INFO:     127.0.0.1:55069 - "POST /api/chat HTTP/1.1" 200 OK
+INFO:     teardown01: in=440 out=51 cost=$0.000260 2650ms

@@ -1,0 +1,89 @@
+--- chunk 0
+{
+ "id": "L7zAauLHF9Tfxs0Pj-iT-Aw",
+ "choices": [
+  {
+   "delta": {
+    "content": "Rec",
+    "role": "assistant"
+   },
+   "index": 0
+  }
+ ],
+ "created": 1791015983,
+ "model": "gemini-3.5-flash-lite",
+ "object": "chat.completion.chunk",
+ "usage": {
+  "completion_tokens": 1,
+  "prompt_tokens": 105,
+  "total_tokens": 106
+ }
+}
+--- chunk 1
+{
+ "id": "L7zAauLHF9Tfxs0Pj-iT-Aw",
+ "choices": [
+  {
+   "delta": {
+    "content": "iprocal Rank Fusion (RRF) is a search algorithm that combines and re-ranks results",
+    "role": "assistant"
+   },
+   "index": 0
+  }
+ ],
+ "created": 1791015983,
+ "model": "gemini-3.5-flash-lite",
+ "object": "chat.completion.chunk",
+ "usage": {
+  "completion_tokens": 19,
+  "prompt_tokens": 105,
+  "total_tokens": 124
+ }
+}
+--- chunk 2
+{
+ "id": "L7zAauLHF9Tfxs0Pj-iT-Aw",
+ "choices": [
+  {
+   "delta": {
+    "content": " from multiple different retrieval systems by calculating a score based on the reciprocal of their positions in each ranked list.",
+    "role": "assistant"
+   },
+   "index": 0
+  }
+ ],
+ "created": 1791015983,
+ "model": "gemini-3.5-flash-lite",
+ "object": "chat.completion.chunk",
+ "usage": {
+  "completion_tokens": 40,
+  "prompt_tokens": 105,
+  "total_tokens": 145
+ }
+}
+--- chunk 3
+{
+ "id": "L7zAauLHF9Tfxs0Pj-iT-Aw",
+ "choices": [
+  {
+   "delta": {
+    "role": "assistant",
+    "extra_content": {
+     "google": {
+      "thought_signature": "EmAKXgFpFH0TH2VQGhLD5a729AhUBCIRSGJnUIcUHZM23eE6jcCmRU+wjJkztlY5vODm8aRGGCvAocJrMh6LWJtIS5WutMK+z8uwIC18gI/K6fNydmJVUTc1GcqJcG0NtM8="
+     }
+    }
+   },
+   "finish_reason": "stop",
+   "index": 0
+  }
+ ],
+ "created": 1791015983,
+ "model": "gemini-3.5-flash-lite",
+ "object": "chat.completion.chunk",
+ "usage": {
+  "completion_tokens": 40,
+  "prompt_tokens": 105,
+  "total_tokens": 145
+ }
+}

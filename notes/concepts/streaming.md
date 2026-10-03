@@ -305,6 +305,21 @@ mostly do not need, at the price of stateful connections.
 - **Career angle**: streaming UX, abort handling, progressive rendering and mobile networking are
   where frontend experience is a genuine differentiator in AI engineering interviews.
 
+### In a real product: the AI SDK UI message stream (teardown 01, 2026-10-03)
+
+The production version of lab 05's tagged-union protocol is Vercel's UI message stream (AI SDK
+5+): SSE, one JSON part per event, and three things lab 05's schema lacks:
+- **Block lifecycles with ids**: `text-start` / `text-delta` / `text-end`, so several blocks
+  (reasoning, text, parallel tools) can be open at once.
+- **Tool input that streams** (`tool-input-start` → `tool-input-delta` → `tool-input-available`
+  → `tool-output-available`).
+- **Steps** (`start-step` / `finish-step`) for model → tool → model within one turn, and a
+  `[DONE]` terminator.
+
+The teardown also showed the failure mode: the example's frontend was upgraded to this protocol
+and its Python backend still emitted the AI SDK 4 `0:"text"` lines. The client parsed those as
+nothing, with no error. See `teardowns/01-next-fastapi/NOTES.md` and exp-021.
+
 ## Limits of what lab 05 will prove
 
 - One provider, one model (Groq `openai/gpt-oss-20b`). Decode speed, reasoning share and usage
@@ -323,5 +338,7 @@ mostly do not need, at the price of stateful connections.
 - `EXPERIMENTS.md` exp-003 — hidden reasoning at 84-95% of output tokens on gpt-oss-20b.
 - `notes/concepts/tool-calling.md`, `labs/04-tools/NOTES.md` — `finish_reason` rule; U+202F crash.
 - `packages/llm-kit/src/llm_kit/client.py` `stream()` — read 2026-09-26.
+- AI SDK stream protocol docs, https://ai-sdk.dev/docs/ai-sdk-ui/stream-protocol — read
+  2026-10-03; `teardowns/01-next-fastapi/server_v5.py` is a working Python implementation.
 - WHATWG HTML spec, Server-sent events section; OpenAI-compatible streaming docs for
   `stream_options.include_usage` — re-verify per provider at use.

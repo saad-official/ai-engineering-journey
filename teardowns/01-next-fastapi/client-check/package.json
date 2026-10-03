@@ -1,0 +1,9 @@
+{
+  "name": "teardown-01-client-check",
+  "private": true,
+  "type": "module",
+  "description": "Consume a backend's stream with the REAL ai package client code (no Next.js, no React).",
+  "dependencies": {
+    "ai": "^7.0.127"
+  }
+}

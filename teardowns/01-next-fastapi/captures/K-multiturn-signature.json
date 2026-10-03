@@ -1,0 +1,29 @@
+{
+  "turn1": {
+    "ok": true,
+    "parts": [
+      "step-start",
+      "tool-get_current_weather",
+      "step-start",
+      "text: The current temperature in Lahore is 31°C."
+    ]
+  },
+  "turn2_with_signature": {
+    "ok": true,
+    "parts": [
+      "step-start",
+      "tool-get_current_weather",
+      "step-start",
+      "text: The current temperature in Karachi is also 31°C. \n\nComparing the two cities, the temperature in Lahore and Karachi is currently the same at 31 degrees Celsius."
+    ]
+  },
+  "turn2_signature_stripped": {
+    "ok": true,
+    "parts": [
+      "step-start",
+      "tool-get_current_weather",
+      "step-start",
+      "text: Both Lahore and Karachi are currently at 31°C, so the temperature in both cities is the same right now."
+    ]
+  }
+}

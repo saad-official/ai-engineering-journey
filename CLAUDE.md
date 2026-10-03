@@ -40,6 +40,10 @@ architectural decision.
 - `EXPERIMENTS.md` — experiment log
 - `CAREER_PLAN.md` — resume/portfolio/interview plan (activated in Phase 4–5)
 - `labs/` — small, throwaway-ish learning exercises (numbered: `labs/01-...`)
+- `teardowns/` — reverse-engineering open-source AI apps, easy → production-grade, mapped to the
+  roadmap phases. Run upstream code unmodified via a harness, capture the wire, break one thing,
+  diff against our lab. Method + ladder in `teardowns/README.md`; upstream clones in
+  `teardowns/_src/` (gitignored).
 - `experiments/` — spikes comparing approaches (each has a short README with findings)
 - `projects/` — major projects (each eventually its own repo under saad-official; may start here)
 - `notes/concepts/` — one Markdown file per concept (the personal knowledge base)

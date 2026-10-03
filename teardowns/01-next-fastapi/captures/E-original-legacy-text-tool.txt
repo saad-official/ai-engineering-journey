@@ -1,0 +1,8 @@
+# REQUEST: legacy body, ?protocol=text, TOOL prompt
+HTTP/1.1 200 OK
+date: Sat, 03 Oct 2026 08:26:25 GMT
+server: uvicorn
+x-vercel-ai-data-stream: v1
+Transfer-Encoding: chunked
+
+None

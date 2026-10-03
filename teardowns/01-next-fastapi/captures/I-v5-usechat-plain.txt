@@ -1,0 +1,35 @@
+# REQUEST BODY (what useChat sends)
+{"id":"chat-teardown-01","messages":[{"id":"msg-user-1","role":"user","parts":[{"type":"text","text":"In two sentences, why is the sky blue?"}]}],"trigger":"submit-message"}
+
+# RESPONSE 200
+cache-control: no-cache
+content-type: text/event-stream; charset=utf-8
+date: Sat, 03 Oct 2026 08:31:05 GMT
+server: uvicorn
+transfer-encoding: chunked
+x-accel-buffering: no
+x-vercel-ai-ui-message-stream: v1
+
+# RAW BODY
+data: {"type": "start", "messageId": "msg-96eacc56ee80"}
+
+data: {"type": "start-step"}
+
+data: {"type": "text-start", "id": "text-0"}
+
+data: {"type": "text-delta", "id": "text-0", "delta": "The sky"}
+
+data: {"type": "text-delta", "id": "text-0", "delta": " is blue because Earth's atmosphere scatters sunlight in all directions. Because violet"}
+
+data: {"type": "text-delta", "id": "text-0", "delta": " and blue light travel in smaller, shorter waves than other colors, they get scattered more than the other colors, which causes us"}
+
+data: {"type": "text-delta", "id": "text-0", "delta": " to see a blue sky."}
+
+data: {"type": "text-end", "id": "text-0"}
+
+data: {"type": "finish-step"}
+
+data: {"type": "finish", "finishReason": "stop", "messageMetadata": {"usage": {"inputTokens": 106, "outputTokens": 49}, "costUsd": 0.0001543, "model": "gemini-3.5-flash-lite"}}
+
+data: [DONE]
+

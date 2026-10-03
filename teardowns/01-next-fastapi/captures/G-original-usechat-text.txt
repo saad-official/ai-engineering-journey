@@ -1,0 +1,11 @@
+# REQUEST BODY (what useChat sends)
+{"id":"chat-teardown-01","messages":[{"id":"msg-user-1","role":"user","parts":[{"type":"text","text":"In two sentences, why is the sky blue?"}]}],"trigger":"submit-message"}
+
+# RESPONSE 422
+content-length: 208
+content-type: application/json
+date: Sat, 03 Oct 2026 08:26:32 GMT
+server: uvicorn
+
+# RAW BODY
+{"detail":[{"type":"missing","loc":["body","messages",0,"content"],"msg":"Field required","input":{"id":"msg-user-1","role":"user","parts":[{"type":"text","text":"In two sentences, why is the sky blue?"}]}}]}
