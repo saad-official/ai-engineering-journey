@@ -22,9 +22,9 @@ The portfolio ladder. Few projects, each one proving a specific AI Engineering c
 | Level | Project | Phase | Repo | Status |
 |---|---|---|---|---|
 | 0 | Labs and experiments | 0-5 | `ai-engineering-journey` (this repo) | In progress |
-| 1 | Changelog Forge | 1 | `changelog-forge` | Planned |
-| 2 | DocPilot RN | 2 | `docpilot-rn` | Planned |
-| 3 | Review Radar | 3 | `review-radar` | Planned |
+| 1 | Changelog Forge | 1 | [`changelog-forge`](https://github.com/saad-official/changelog-forge) | In progress (2026-10-04) |
+| 2 | DocPilot RN | 2 | [`docpilot-rn`](https://github.com/saad-official/docpilot-rn) | Planned (repo created 2026-10-04) |
+| 3 | Review Radar | 3 | [`review-radar`](https://github.com/saad-official/review-radar) | Planned (repo created 2026-10-04) |
 | 4 | Review Radar SaaS (hardened, deployed, multi-tenant) | 4 | `review-radar` | Planned |
 | 5 | Chosen product (see roadmap Phase 5) | 5 | TBD | Not started |
 
