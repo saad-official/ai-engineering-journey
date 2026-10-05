@@ -23,8 +23,8 @@ The portfolio ladder. Few projects, each one proving a specific AI Engineering c
 |---|---|---|---|---|
 | 0 | Labs and experiments | 0-5 | `ai-engineering-journey` (this repo) | In progress |
 | 1 | Changelog Forge | 1 | [`changelog-forge`](https://github.com/saad-official/changelog-forge) | Live 2026-10-04: [changelogforge.vercel.app](https://changelogforge.vercel.app) |
-| 2 | DocPilot RN | 2 | [`docpilot-rn`](https://github.com/saad-official/docpilot-rn) | Planned (repo created 2026-10-04) |
-| 3 | Review Radar | 3 | [`review-radar`](https://github.com/saad-official/review-radar) | Planned (repo created 2026-10-04) |
+| 2 | DocPilot RN | 2 | [`docpilot-rn`](https://github.com/saad-official/docpilot-rn) | Live 2026-10-05: [docpilotrn.vercel.app](https://docpilotrn.vercel.app) |
+| 3 | Review Radar | 3 | [`review-radar`](https://github.com/saad-official/review-radar) | Live 2026-10-05: [getreviewradar.vercel.app](https://getreviewradar.vercel.app) (agent demo pending quota) |
 | 4 | Review Radar SaaS (hardened, deployed, multi-tenant) | 4 | `review-radar` | Planned |
 | 5 | Chosen product (see roadmap Phase 5) | 5 | TBD | Not started |
 
